@@ -6,12 +6,11 @@
 	<artifactId>ozge_yilmaz_case</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>QA Case Project</name>
+	
 	<properties>
-
 		<selenium.version>4.35.0</selenium.version>
 		<testng.version>7.11.0</testng.version>
 		<webdrivermanager.version>6.1.0</webdrivermanager.version>
-
 	</properties>
 
 	<dependencies>
