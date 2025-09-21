@@ -1,5 +1,7 @@
 package tests;
 
+import java.security.PublicKey;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -25,11 +27,14 @@ public class HomePageTest {
 	@Test
 	public void verifyHomePageIsOpened() {
 		System.out.println("The url of the home page is : " + TestDataSets.base_url);
-		
 		hp.acceptCookiesElement();
-		
 		// check for insider that include inseder title
 		Assert.assertTrue(hp.isHomePageOpened("insider"), "Home page is not opened correctly!");
+	}
+	
+	@Test
+	public void dropdownMenu() {
+		hp.dropdownmenuforcompanybtn();
 	}
 
 	@AfterClass

@@ -18,6 +18,11 @@ public class HomePage {
 	WebElement acceptCookiesBtn;
 	
 
+	@FindBy(xpath ="//a[normalize-space()='Company']")
+	WebElement dropdownBtn;
+	
+	
+
 	// Constructor
 	public HomePage(WebDriver driver) {
 		this.driver = driver;
@@ -48,5 +53,8 @@ public class HomePage {
 		    }
 	}
 
-	
+	public void dropdownmenuforcompanybtn() {
+		wait.until(ExpectedConditions.elementToBeClickable(dropdownBtn));
+		dropdownBtn.click();
+	}
 }
