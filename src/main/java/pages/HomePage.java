@@ -9,6 +9,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import testData.TestDataSets;
+
+
 
 public class HomePage {
 	private WebDriver hp_driver;
@@ -35,7 +38,7 @@ public class HomePage {
 
 	// home page check
 	public boolean isHomePageOpened(String titleInclude) {
-		hp_wait.until(ExpectedConditions.urlContains("useinsider"));
+		hp_wait.until(ExpectedConditions.urlContains(TestDataSets.base_all));
 		boolean title = hp_driver.getTitle().toLowerCase().contains(titleInclude);
 		return title;
 	}

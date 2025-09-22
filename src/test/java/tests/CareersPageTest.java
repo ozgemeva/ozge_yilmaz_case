@@ -12,6 +12,7 @@ public class CareersPageTest extends BaseTest{
 
 	public void startCareer() {
 		hp = new HomePage(driver);
+		cp = new CareersPage(driver);
 		hp.acceptCookiesIfPresent();
 		hp.clickCompanyLink();
 		hp.clickCareerLink();
@@ -22,6 +23,10 @@ public class CareersPageTest extends BaseTest{
 		startCareer();
 		Assert.assertTrue(cp.isOnCareerPage(TestDataSets.careers_url), "Careers page is not opened correctly!");
 
+	}
+	
+	public void verifyLocationsTab() {
+		
 	}
 
 }

@@ -5,14 +5,12 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import pages.CareersPage;
 import pages.HomePage;
 import testData.TestDataSets;
 
 public class HomePageTest extends BaseTest {
 	private HomePage hp;
-	private CareersPage cp;
+	
 
 	@BeforeClass
 	public void driverObjcetsClass() {
