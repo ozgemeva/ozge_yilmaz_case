@@ -11,39 +11,41 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class HomePage {
-	private WebDriver driver;
-	WebDriverWait wait;
+	private WebDriver hp_driver;
+	WebDriverWait hp_wait;
 	
 	@FindBy(xpath = "//a[normalize-space()='Accept All']")
 	WebElement acceptCookiesBtn;
 	
 
 	@FindBy(xpath ="//a[normalize-space()='Company']")
-	WebElement dropdownBtn;
+	WebElement dropdownBtnCompany;
 	
+	@FindBy(xpath = "//a[normalize-space()='Careers']")
+	WebElement subDropdownBtnCareer;
 	
 
 	// Constructor
 	public HomePage(WebDriver driver) {
-		this.driver = driver;
+		this.hp_driver = driver;
 		PageFactory.initElements(driver, this);
-		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		hp_wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 	
 	}
 
 	// home page check
 	public boolean isHomePageOpened(String titleInclude) {
-		wait.until(ExpectedConditions.urlContains("useinsider"));
-		boolean title = driver.getTitle().toLowerCase().contains(titleInclude);
+		hp_wait.until(ExpectedConditions.urlContains("useinsider"));
+		boolean title = hp_driver.getTitle().toLowerCase().contains(titleInclude);
 		return title;
 	}
 
 	// If the cookie banner appears, it will be accepted; if not, the test will continue
-	public void acceptCookiesElement() {
+	public void acceptCookiesIfPresent() {
 
 		   try {
 			   
-		        WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(3));
+		        WebDriverWait shortWait = new WebDriverWait(hp_driver, Duration.ofSeconds(3));
 		        shortWait.until(ExpectedConditions.visibilityOf(acceptCookiesBtn));
 		        acceptCookiesBtn.click();
 		        System.out.println("Cookie banner accepted.");
@@ -53,8 +55,13 @@ public class HomePage {
 		    }
 	}
 
-	public void dropdownmenuforcompanybtn() {
-		wait.until(ExpectedConditions.elementToBeClickable(dropdownBtn));
-		dropdownBtn.click();
+	public void clickCompanyLink() {
+		hp_wait.until(ExpectedConditions.elementToBeClickable(dropdownBtnCompany));
+		dropdownBtnCompany.click();
+	}
+	
+	public void clickCareerLink() {
+		hp_wait.until(ExpectedConditions.elementToBeClickable(subDropdownBtnCareer));
+		subDropdownBtnCareer.click();
 	}
 }
