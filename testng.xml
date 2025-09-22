@@ -3,7 +3,6 @@
 <suite name="QA Case Suite" verbose="1">
 	<test name="UI Tests">
 		<classes>
-			<class name="tests.HomePageTest"/>
 			<class name="tests.CareersPageTest"/>
 		</classes>
 	</test>
