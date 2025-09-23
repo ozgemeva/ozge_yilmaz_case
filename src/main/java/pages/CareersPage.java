@@ -2,9 +2,6 @@ package pages;
 
 import java.time.Duration;
 import java.util.List;
-
-import javax.xml.xpath.XPath;
-
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -32,6 +29,15 @@ public class CareersPage {
 
 	@FindBy(xpath = "//div[contains(@class,'career-load-more')]//div[contains(@class,'job-item')]")
 	private List<WebElement> allTeamsItems;
+
+	@FindBy(xpath = "//h2[normalize-space()='Life at Insider']")
+	private WebElement lifeAtInsederInsiderTitle;
+
+	@FindBy(css = "div.elementor-main-swiper.swiper-container")
+	private WebElement mainSlider;
+
+	@FindBy(css = "div.elementor-main-swiper .swiper-slide")
+	private List<WebElement> lifeAtInsiderSlides;
 
 	// Constructor
 	public CareersPage(WebDriver driver) {
@@ -89,11 +95,9 @@ public class CareersPage {
 	}
 
 	public boolean btn_seeAllClick() {
-
 		// href=javascript so to prevent overlay conflig.To use enter event.
-		WebElement seeAllElement = cp_driver.findElement(By.xpath("//a[contains(@class,'loadmore')]"));
-		if (seeAllElement.isDisplayed()) {
-			seeAllElement.sendKeys(Keys.ENTER);
+		if (jobBtn.isDisplayed()) {
+			jobBtn.sendKeys(Keys.ENTER);
 		} else {
 			System.out.println("Click failed");
 		}
@@ -108,4 +112,21 @@ public class CareersPage {
 		System.out.println("Job Items size: " + jobItemSize);
 		return jobItemSize;
 	}
+
+	// LifeAtInsider Title control to display in the DOM.
+	public boolean isLifeAtInsiderVisible() {
+		try {
+			cp_wait.until(ExpectedConditions.visibilityOf(lifeAtInsederInsiderTitle));
+			System.out.println("Life at Insider visible in CareerPages");
+			return lifeAtInsederInsiderTitle.isDisplayed() && mainSlider.isDisplayed();
+		} catch (Exception e) {
+			System.out.println("Life at Insider not visible: " + e.getMessage());
+			return false;
+		}
+	}
+
+	public int getLifeAtInsiderSlidesCount() {
+		return lifeAtInsiderSlides.size();
+	}
+
 }

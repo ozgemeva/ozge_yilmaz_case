@@ -64,5 +64,14 @@ public class CareersPageTest extends BaseTest {
 			Assert.assertTrue(afterClickAlltems > beforeClickAlltems, "Job items did not increase");
 		}
 	}
+	
+	@Test(dependsOnMethods = "verifyOnCareerPageIsOpened")
+	public void verifyLifeAtInsiderSection() {
+	    Assert.assertTrue(cp.isLifeAtInsiderVisible(), "Life at Insider section is missing!");
+	    
+	    int slides = cp.getLifeAtInsiderSlidesCount();
+	    System.out.println("Life at Insider slides count: " + slides);
+	    Assert.assertTrue(slides > 0, "No slides found in Life at Insider section!");
+	}
 
 }
