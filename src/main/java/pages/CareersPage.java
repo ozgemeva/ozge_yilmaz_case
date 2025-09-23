@@ -1,6 +1,7 @@
 package pages;
 
 import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -26,6 +27,9 @@ public class CareersPage {
 
 	@FindBy(xpath = "//a[contains(@class,'loadmore')]")
 	private WebElement jobBtn;
+
+	@FindBy(xpath = "//div[contains(@class,'career-load-more')]//div[contains(@class,'job-item')]")
+	private List<WebElement> allTeamsItems;
 
 	// Constructor
 	public CareersPage(WebDriver driver) {
@@ -55,10 +59,14 @@ public class CareersPage {
 
 	// To click NextArrow
 	public void clickNextArrow() {
-		cp_wait.until(ExpectedConditions.elementToBeClickable(nextArrow));
-		nextArrow.sendKeys(Keys.ARROW_RIGHT);// to prevent sticky button so trigger for JS
-		;
-		System.out.println("Clicked next arrow button");
+		try {
+			cp_wait.until(ExpectedConditions.elementToBeClickable(nextArrow));
+			nextArrow.sendKeys(Keys.ARROW_RIGHT);// to prevent sticky button so trigger for JS
+			System.out.println("Clicked next arrow button");
+		} catch (Exception e) {
+			System.out.println("Exception in btn_seeAll() : " + e.getMessage());
+		}
+
 	}
 
 	public String getSliderBeforeTitle() {
@@ -79,18 +87,22 @@ public class CareersPage {
 	}
 
 	public boolean btn_seeAllClick() {
-
 		try {
-			scrollToCarouselSection();
-			//href=javascript so to prevent overlay conflig.To use enter event.
-			cp_wait.until(ExpectedConditions.elementToBeClickable(jobBtn)).sendKeys(Keys.ENTER);
+			// href=javascript so to prevent overlay conflig.To use enter event.
+			cp_wait.until(ExpectedConditions.visibilityOf(jobBtn)).sendKeys(Keys.ENTER);
 			System.out.println("See all button is actived");
 			return true;
 		} catch (Exception e) {
 			System.out.println("Exception in btn_seeAll() : " + e.getMessage());
 			return false;
-
 		}
+	}
 
+	public int getTeamsSizeCount() {
+
+		cp_wait.until(ExpectedConditions.visibilityOfAllElements(allTeamsItems));
+		int jobItemSize = allTeamsItems.size();
+		System.out.println("Job Items size: " + jobItemSize);
+		return jobItemSize;
 	}
 }
