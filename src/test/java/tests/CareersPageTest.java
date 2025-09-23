@@ -47,5 +47,9 @@ public class CareersPageTest extends BaseTest {
 		Assert.assertNotEquals(beforeSlider, afterSlider, "Slider did not move!");
 	}
 
+	@Test
+	public void verify_seeAllBtn() {
+		Assert.assertTrue(cp.btn_seeAllClick(),"button is not clickable");
+	}
 
 }

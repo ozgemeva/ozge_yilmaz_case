@@ -24,8 +24,8 @@ public class CareersPage {
 	@FindBy(css = "#career-our-location")
 	public WebElement sliderSection;
 
-	@FindBy(xpath = "//*[@id='career-our-location']//a[i[contains(@class,'location-slider-prev')]]")
-	private WebElement prevArrow;
+	@FindBy(xpath = "//a[contains(@class,'loadmore')]")
+	private WebElement jobBtn;
 
 	// Constructor
 	public CareersPage(WebDriver driver) {
@@ -56,9 +56,9 @@ public class CareersPage {
 	// To click NextArrow
 	public void clickNextArrow() {
 		cp_wait.until(ExpectedConditions.elementToBeClickable(nextArrow));
-		nextArrow.sendKeys(Keys.ARROW_RIGHT);//tp prevent sticky button so trigger for JS
+		nextArrow.sendKeys(Keys.ARROW_RIGHT);// to prevent sticky button so trigger for JS
 		;
-		System.out.println("Clicked next arrow()");
+		System.out.println("Clicked next arrow button");
 	}
 
 	public String getSliderBeforeTitle() {
@@ -78,8 +78,19 @@ public class CareersPage {
 		return cp_driver.findElement(activeSlideLocator).getText().trim();
 	}
 
-	public void btn_seeAll() {
+	public boolean btn_seeAllClick() {
+
+		try {
+			scrollToCarouselSection();
+			//href=javascript so to prevent overlay conflig.To use enter event.
+			cp_wait.until(ExpectedConditions.elementToBeClickable(jobBtn)).sendKeys(Keys.ENTER);
+			System.out.println("See all button is actived");
+			return true;
+		} catch (Exception e) {
+			System.out.println("Exception in btn_seeAll() : " + e.getMessage());
+			return false;
+
+		}
 
 	}
-
 }
