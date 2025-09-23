@@ -125,6 +125,7 @@ public class CareersPage {
 		}
 	}
 
+	//LifeAtInsider slides size
 	public int getLifeAtInsiderSlidesCount() {
 		return lifeAtInsiderSlides.size();
 	}
