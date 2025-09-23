@@ -56,7 +56,9 @@ public class CareersPage {
 	// To click NextArrow
 	public void clickNextArrow() {
 		cp_wait.until(ExpectedConditions.elementToBeClickable(nextArrow));
-		nextArrow.sendKeys(Keys.ARROW_RIGHT);
+		nextArrow.sendKeys(Keys.ARROW_RIGHT);//tp prevent sticky button so trigger for JS
+		;
+		System.out.println("Clicked next arrow()");
 	}
 
 	public String getSliderBeforeTitle() {
@@ -64,10 +66,20 @@ public class CareersPage {
 		return activeSlideTitle.getText().trim();
 	}
 
-	//wait until the active slide text is different from the previous one
+	// wait until the active slide text is different from the previous one
 	public String getSliderAfterTitle(String beforeSlideTitle) {
-		cp_wait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(activeSlideTitle, beforeSlideTitle)));
-		return activeSlideTitle.getText().trim();
+		By activeSlideLocator = By.cssSelector("#career-our-location li.glide__slide.glide__slide--active");
+		cp_wait.until(ExpectedConditions
+				.not(ExpectedConditions.textToBePresentInElementLocated(activeSlideLocator, beforeSlideTitle)));
+
+		if (cp_driver.findElement(activeSlideLocator).getText().trim().isEmpty()) {
+			clickNextArrow();
+		}
+		return cp_driver.findElement(activeSlideLocator).getText().trim();
+	}
+
+	public void btn_seeAll() {
+
 	}
 
 }

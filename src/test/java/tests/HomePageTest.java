@@ -30,8 +30,7 @@ public class HomePageTest extends BaseTest {
 	@Test(priority = 2, dependsOnMethods = "verifyHomePageIsOpened")
 	public void clickCompanyLinkTest() {
 		hp.clickCompanyLink();
-		WebElement dropdownMenu = driver.findElement(By.xpath("//a[normalize-space()='Company']"));
-		Assert.assertTrue(dropdownMenu.isDisplayed(), "Company menu is not visible!");
+		Assert.assertTrue(hp.isdisablefordropdownMenu(), "Company menu is not visible!");
 	}
 
 	@Test(priority = 3, dependsOnMethods = "clickCompanyLinkTest")
