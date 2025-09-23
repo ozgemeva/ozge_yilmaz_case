@@ -3,6 +3,8 @@ package pages;
 import java.time.Duration;
 import java.util.List;
 
+import javax.xml.xpath.XPath;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -87,15 +89,16 @@ public class CareersPage {
 	}
 
 	public boolean btn_seeAllClick() {
-		try {
-			// href=javascript so to prevent overlay conflig.To use enter event.
-			cp_wait.until(ExpectedConditions.visibilityOf(jobBtn)).sendKeys(Keys.ENTER);
-			System.out.println("See all button is actived");
-			return true;
-		} catch (Exception e) {
-			System.out.println("Exception in btn_seeAll() : " + e.getMessage());
-			return false;
+
+		// href=javascript so to prevent overlay conflig.To use enter event.
+		WebElement seeAllElement = cp_driver.findElement(By.xpath("//a[contains(@class,'loadmore')]"));
+		if (seeAllElement.isDisplayed()) {
+			seeAllElement.sendKeys(Keys.ENTER);
+		} else {
+			System.out.println("Click failed");
 		}
+		System.out.println("See all button is actived");
+		return true;
 	}
 
 	public int getTeamsSizeCount() {
