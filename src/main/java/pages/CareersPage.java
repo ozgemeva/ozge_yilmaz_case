@@ -38,10 +38,12 @@ public class CareersPage {
 
 	@FindBy(css = "div.elementor-main-swiper .swiper-slide")
 	private List<WebElement> lifeAtInsiderSlides;
-	
-	@FindBy (css = "#career-our-location li.glide__slide.glide__slide--active")
+
+	@FindBy(css = "#career-our-location li.glide__slide.glide__slide--active")
 	private WebElement activeSlideLocator;
-	
+
+	@FindBy(xpath = "//a[h3[normalize-space()='Quality Assurance']]")
+	private WebElement jobRole;
 
 	// Constructor
 	public CareersPage(WebDriver driver) {
@@ -58,40 +60,40 @@ public class CareersPage {
 		boolean currentUrl = cp_driver.getCurrentUrl().toLowerCase().contains(careersPageTitle);
 		return currentUrl;
 	}
-	
-	//General to scroll until element
+
+	// General to scroll until element
 	public void scrollToCarouselSection(WebElement element) {
 		try {
-	        action.moveToElement(element).perform();
-	        cp_wait.until(ExpectedConditions.elementToBeClickable(element));
-	        System.out.println("To scroll");
-	    } catch (Exception e) {
-	    	 System.out.println("Scroll failed for element: " + element + " - " + e.getMessage());
-	        throw e;
-	    }
+			action.moveToElement(element).perform();
+			cp_wait.until(ExpectedConditions.elementToBeClickable(element));
+			System.out.println("To scroll");
+		} catch (Exception e) {
+			System.out.println("Scroll failed for element: " + element + " - " + e.getMessage());
+			throw e;
+		}
 
 	}
-	
-	//General click btn method
+
+	// General click btn method
 	public void clickBtn(WebElement element) {
-	    try {
-	        action.moveToElement(element).perform();
-	        cp_wait.until(ExpectedConditions.elementToBeClickable(element));
-	        action.moveToElement(element).click().perform();
-	    } catch (Exception e) {
-	    	 System.out.println("Click failed for element: " + element + " - " + e.getMessage());
-	        throw e;
-	    }
+		try {
+			action.moveToElement(element).perform();
+			cp_wait.until(ExpectedConditions.elementToBeClickable(element));
+			action.moveToElement(element).click().perform();
+		} catch (Exception e) {
+			System.out.println("Click failed for element: " + element + " - " + e.getMessage());
+			throw e;
+		}
 	}
-	
+
 	// --- Carousel controls ---
 	public void scrollUntilSlider() {
 		try {
 			scrollToCarouselSection(sliderSection);
 		} catch (Exception e) {
-			 System.out.println("Scroll failed for element: "+e.getMessage());
-			 throw e;
-		}	
+			System.out.println("Scroll failed for element: " + e.getMessage());
+			throw e;
+		}
 	}
 
 	public boolean isCarouselVisible() {
@@ -99,7 +101,7 @@ public class CareersPage {
 	}
 
 	// To click NextArrow
-	public void clickNextArrow() {
+	public void clickNextArrowBtn() {
 		try {
 			clickBtn(nextArrow);
 			System.out.println("Clicked next arrow button");
@@ -115,43 +117,17 @@ public class CareersPage {
 		return activeSlideTitle.getText().trim();
 	}
 
-//	// wait until the active slide text is different from the previous one
-//	public String getSliderAfterTitle(String beforeSlideTitle) {
-//		By activeSlideLocator = By.cssSelector("#career-our-location li.glide__slide.glide__slide--active");
-//		cp_wait.until(ExpectedConditions
-//				.not(ExpectedConditions.textToBePresentInElementLocated(activeSlideLocator, beforeSlideTitle)));
-//
-//		if (cp_driver.findElement(activeSlideLocator).getText().trim().isEmpty()) {
-//			clickNextArrow();
-//		}
-//		return cp_driver.findElement(activeSlideLocator).getText().trim();
-//	}
-	
-	
-
 	// wait until the active slide text is different from the previous one
 	public String getSliderAfterTitle(String beforeSlideTitle) {
 
-		cp_wait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(activeSlideLocator, beforeSlideTitle)));
+		cp_wait.until(ExpectedConditions
+				.not(ExpectedConditions.textToBePresentInElement(activeSlideLocator, beforeSlideTitle)));
 
-		if ((activeSlideLocator).getText().trim().isEmpty()){
-			clickNextArrow();
+		if ((activeSlideLocator).getText().trim().isEmpty()) {
+			clickNextArrowBtn();
 		}
 		return activeSlideLocator.getText().trim();
 	}
-	
-
-	public boolean btn_seeAllTeamsBtn() {
-	// href=javascript so to prevent overlay conflig.To use enter event.
-		try {
-			clickBtn(jobBtn);
-		System.out.println("See all button is actived");
-		return true;
-		}catch (Exception e) {
-			System.out.println("Exception : "+e.getMessage());
-			return false;
-		}
-}
 
 	public int getTeamsSizeCount() {
 
@@ -173,9 +149,32 @@ public class CareersPage {
 		}
 	}
 
-	//LifeAtInsider slides size
+	// LifeAtInsider slides size
 	public int getLifeAtInsiderSlidesCount() {
 		return lifeAtInsiderSlides.size();
 	}
 
+	public boolean clickSeeAllTeamsBtn() {
+		// href=javascript so to prevent overlay conflig.To use enter event.
+		try {
+			clickBtn(jobBtn);
+			System.out.println("See all button is actived");
+			return true;
+		} catch (Exception e) {
+			System.out.println("Exception : " + e.getMessage());
+			return false;
+		}
+	}
+
+	public boolean selectRoleForWork() {
+		try {
+			
+			clickBtn(jobRole);
+			System.out.println("Click role button");
+			return true;
+		} catch (Exception e) {
+			System.out.println("Exception : " + e.getMessage());
+			return false;
+		}
+	}
 }

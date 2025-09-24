@@ -40,22 +40,23 @@ public class CareersPageTest extends BaseTest {
 	public void carouselChanges() {
 		String beforeSlider = cp.getSliderBeforeTitle();
 		System.out.println("Before title : " + beforeSlider);
-		cp.clickNextArrow();
+		cp.clickNextArrowBtn();
 
 		String afterSlider = cp.getSliderAfterTitle(beforeSlider);
 		System.out.println("After title : " + afterSlider);
 		Assert.assertNotEquals(beforeSlider, afterSlider, "Slider did not move!");
 	}
 
-	@Test
-	public void verify_JobItemsLoad() {
+	@Test(dependsOnMethods = "verifyOnCareerPageIsOpened")
+	public void verifyJobItemsLoad() {
 
 		int beforeClickAlltems = cp.getTeamsSizeCount();
-		System.out.println("Before count : " + beforeClickAlltems);
-		Assert.assertTrue(cp.btn_seeAllTeamsBtn(), "button is not clickable");
+		System.out.println("Job items before see all : " + beforeClickAlltems);
+		
+		Assert.assertTrue(cp.clickSeeAllTeamsBtn(), "button is not clickable");
 
 		int afterClickAlltems = cp.getTeamsSizeCount();
-		System.out.println("After count : " + afterClickAlltems);
+		System.out.println("Job items after see all : " + afterClickAlltems);
 
 		if (beforeClickAlltems == afterClickAlltems) {
 			Assert.assertTrue(afterClickAlltems > 0, "Job item list is empty.");
@@ -71,6 +72,12 @@ public class CareersPageTest extends BaseTest {
 	    int slides = cp.getLifeAtInsiderSlidesCount();
 	    System.out.println("Life at Insider slides count: " + slides);
 	    Assert.assertTrue(slides > 0, "No slides found in Life at Insider section!");
+	}
+	
+	
+	@Test(dependsOnMethods = "verifyScrollToCarousel")
+	public void verifyRolePosition() {
+	    Assert.assertTrue(cp.selectRoleForWork(), "Role did not select.");
 	}
 
 }
