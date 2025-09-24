@@ -38,6 +38,10 @@ public class CareersPage {
 
 	@FindBy(css = "div.elementor-main-swiper .swiper-slide")
 	private List<WebElement> lifeAtInsiderSlides;
+	
+	@FindBy (css = "#career-our-location li.glide__slide.glide__slide--active")
+	private WebElement activeSlideLocator;
+	
 
 	// Constructor
 	public CareersPage(WebDriver driver) {
@@ -54,11 +58,40 @@ public class CareersPage {
 		boolean currentUrl = cp_driver.getCurrentUrl().toLowerCase().contains(careersPageTitle);
 		return currentUrl;
 	}
+	
+	//General to scroll until element
+	public void scrollToCarouselSection(WebElement element) {
+		try {
+	        action.moveToElement(element).perform();
+	        cp_wait.until(ExpectedConditions.elementToBeClickable(element));
+	        System.out.println("To scroll");
+	    } catch (Exception e) {
+	    	 System.out.println("Scroll failed for element: " + element + " - " + e.getMessage());
+	        throw e;
+	    }
 
+	}
+	
+	//General click btn method
+	public void clickBtn(WebElement element) {
+	    try {
+	        action.moveToElement(element).perform();
+	        cp_wait.until(ExpectedConditions.elementToBeClickable(element));
+	        action.moveToElement(element).click().perform();
+	    } catch (Exception e) {
+	    	 System.out.println("Click failed for element: " + element + " - " + e.getMessage());
+	        throw e;
+	    }
+	}
+	
 	// --- Carousel controls ---
-	public void scrollToCarouselSection() {
-		action.moveToElement(sliderSection).perform();
-
+	public void scrollUntilSlider() {
+		try {
+			scrollToCarouselSection(sliderSection);
+		} catch (Exception e) {
+			 System.out.println("Scroll failed for element: "+e.getMessage());
+			 throw e;
+		}	
 	}
 
 	public boolean isCarouselVisible() {
@@ -68,11 +101,11 @@ public class CareersPage {
 	// To click NextArrow
 	public void clickNextArrow() {
 		try {
-			cp_wait.until(ExpectedConditions.elementToBeClickable(nextArrow));
-			nextArrow.sendKeys(Keys.ARROW_RIGHT);// to prevent sticky button so trigger for JS
+			clickBtn(nextArrow);
 			System.out.println("Clicked next arrow button");
 		} catch (Exception e) {
-			System.out.println("Exception in btn_seeAll() : " + e.getMessage());
+			System.out.println("Exception in clickNextArrow : " + e.getMessage());
+			throw e;
 		}
 
 	}
@@ -82,28 +115,43 @@ public class CareersPage {
 		return activeSlideTitle.getText().trim();
 	}
 
+//	// wait until the active slide text is different from the previous one
+//	public String getSliderAfterTitle(String beforeSlideTitle) {
+//		By activeSlideLocator = By.cssSelector("#career-our-location li.glide__slide.glide__slide--active");
+//		cp_wait.until(ExpectedConditions
+//				.not(ExpectedConditions.textToBePresentInElementLocated(activeSlideLocator, beforeSlideTitle)));
+//
+//		if (cp_driver.findElement(activeSlideLocator).getText().trim().isEmpty()) {
+//			clickNextArrow();
+//		}
+//		return cp_driver.findElement(activeSlideLocator).getText().trim();
+//	}
+	
+	
+
 	// wait until the active slide text is different from the previous one
 	public String getSliderAfterTitle(String beforeSlideTitle) {
-		By activeSlideLocator = By.cssSelector("#career-our-location li.glide__slide.glide__slide--active");
-		cp_wait.until(ExpectedConditions
-				.not(ExpectedConditions.textToBePresentInElementLocated(activeSlideLocator, beforeSlideTitle)));
 
-		if (cp_driver.findElement(activeSlideLocator).getText().trim().isEmpty()) {
+		cp_wait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(activeSlideLocator, beforeSlideTitle)));
+
+		if ((activeSlideLocator).getText().trim().isEmpty()){
 			clickNextArrow();
 		}
-		return cp_driver.findElement(activeSlideLocator).getText().trim();
+		return activeSlideLocator.getText().trim();
 	}
+	
 
-	public boolean btn_seeAllClick() {
-		// href=javascript so to prevent overlay conflig.To use enter event.
-		if (jobBtn.isDisplayed()) {
-			jobBtn.sendKeys(Keys.ENTER);
-		} else {
-			System.out.println("Click failed");
-		}
+	public boolean btn_seeAllTeamsBtn() {
+	// href=javascript so to prevent overlay conflig.To use enter event.
+		try {
+			clickBtn(jobBtn);
 		System.out.println("See all button is actived");
 		return true;
-	}
+		}catch (Exception e) {
+			System.out.println("Exception : "+e.getMessage());
+			return false;
+		}
+}
 
 	public int getTeamsSizeCount() {
 

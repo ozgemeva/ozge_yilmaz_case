@@ -32,7 +32,7 @@ public class CareersPageTest extends BaseTest {
 
 	@Test(priority = 1, dependsOnMethods = "verifyOnCareerPageIsOpened")
 	public void verifyScrollToCarousel() {
-		cp.scrollToCarouselSection();
+		cp.scrollUntilSlider();
 		Assert.assertTrue(cp.isCarouselVisible(), "Slider section is not visible.");
 	}
 
@@ -52,9 +52,8 @@ public class CareersPageTest extends BaseTest {
 
 		int beforeClickAlltems = cp.getTeamsSizeCount();
 		System.out.println("Before count : " + beforeClickAlltems);
-		Assert.assertTrue(cp.btn_seeAllClick(), "button is not clickable");
+		Assert.assertTrue(cp.btn_seeAllTeamsBtn(), "button is not clickable");
 
-		cp.btn_seeAllClick();
 		int afterClickAlltems = cp.getTeamsSizeCount();
 		System.out.println("After count : " + afterClickAlltems);
 
