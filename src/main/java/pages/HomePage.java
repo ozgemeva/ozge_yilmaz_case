@@ -39,7 +39,7 @@ public class HomePage {
 			hp_wait.until(ExpectedConditions.urlContains(TestDataSets.BASE_DOMAIN));
 			String currentTitle = hp_driver.getTitle().toLowerCase();
 			boolean isTitleCorrect = currentTitle.contains(titleInclude.toLowerCase());
-			System.out.println(" --> Current page title: " + currentTitle);
+			System.out.println("Current page title: " + currentTitle);
 			return isTitleCorrect;
 		} catch (Exception e) {
 			System.out.println("Home page check failed: " + e.getMessage());

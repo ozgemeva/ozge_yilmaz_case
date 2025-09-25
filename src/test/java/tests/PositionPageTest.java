@@ -33,7 +33,10 @@ public class PositionPageTest extends BaseTest {
 	@Test
 	public void verifyOnRolePage() {
 		navigateToCareers();
-		Assert.assertTrue(pp.isOnTheRolePage(TestDataSets.ROLE_NAME_LINK), "Position page is not opened correctly!");
+		String roleNameLink = TestDataSets.ROLE_NAME;
+		String formattedRoleNameLink = String.format(roleNameLink.replaceAll(" ", "-"));
+		System.out.println("RoleName is formated for rolepage "+formattedRoleNameLink);
+		Assert.assertTrue(pp.isOnTheRolePage(formattedRoleNameLink), "Position page is not opened correctly!");
 	}
 
 	@Test(priority = 1, dependsOnMethods = "verifyOnRolePage")

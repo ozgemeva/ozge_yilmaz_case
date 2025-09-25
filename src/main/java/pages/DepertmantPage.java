@@ -8,6 +8,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import testData.TestDataSets;
+
 public class DepertmantPage {
 	private WebDriver dp_driver;
 	private WebDriverWait dp_wait;
@@ -22,7 +24,7 @@ public class DepertmantPage {
 
 	public boolean isOnDepartmentPage(String department) {
 		try {
-			String expectedUrl = "https://useinsider.com/careers/open-positions/?department="+ department.toLowerCase();
+			String expectedUrl = TestDataSets.DEPARTMENT_URL_TEMPLATE+ department.toLowerCase();
 			dp_wait.until(ExpectedConditions.urlContains("department=" + department.toLowerCase()));
 			String currentUrl = dp_driver.getCurrentUrl();
 			return currentUrl.equals(expectedUrl);

@@ -3,7 +3,7 @@
 <suite name="QA Case Suite" verbose="1">
 	<test name="UI Flow">
 		<classes>
-			<class name="tests.PositionPageTest"/>
+			<class name="tests.DepertmantPageTest"/>
 		</classes>
 	</test>
 </suite>
@@ -13,4 +13,4 @@
 <!-- tests.HomePageTest  -->
 <!-- tests.CareersPageTest  -->
 <!-- tests.PositionPageTest  -->
-<!-- tests.DepertmentPageTest  -->
+<!-- tests.DepertmantPageTest  -->
