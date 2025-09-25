@@ -14,6 +14,7 @@ public class PositionPage {
 	private WebDriver pp_driver;
 	private WebDriverWait pp_wait;
 	Actions action;
+	CareersPage cp;
 
 	@FindBy(xpath = "//a[normalize-space()='See all QA jobs']")
 	private WebElement seeAllQARole;
@@ -22,6 +23,7 @@ public class PositionPage {
 		this.pp_driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Actions(pp_driver);
+		cp = new CareersPage(driver);
 		pp_wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
 
@@ -38,20 +40,9 @@ public class PositionPage {
 	}
 	
 
-	public void clickButtonRole(WebElement element) {
-		try {
-			action.moveToElement(element).perform();
-			pp_wait.until(ExpectedConditions.elementToBeClickable(element));
-			action.moveToElement(element).click().perform();
-		} catch (Exception e) {
-			System.out.println("Click failed for element: " + element + " - " + e.getMessage());
-			throw e;
-		}
-	}
-
 	public boolean clickButtonSeeAllQAJobs() {
 		try {
-			clickButtonRole(seeAllQARole);
+			cp.clickBtn(seeAllQARole);
 			System.out.println("Click for all QA role");
 			return true;
 

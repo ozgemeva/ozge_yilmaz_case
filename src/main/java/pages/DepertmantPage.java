@@ -4,12 +4,15 @@ import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import testData.TestDataSets;
@@ -18,12 +21,6 @@ public class DepertmantPage {
 	private WebDriver dp_driver;
 	private WebDriverWait dp_wait;
 	Actions action;
-
-	@FindBy(css = "span.select2-selection--single")
-	private WebElement dropdownLocation;
-
-	@FindBy(css = "ul.select2-results__options")
-	private WebElement locationOption;
 
 	public DepertmantPage(WebDriver driver) {
 		this.dp_driver = driver;
@@ -45,28 +42,31 @@ public class DepertmantPage {
 		}
 	}
 
-	// General click btn method
-	public void clickBtnForDepartmentPage(WebElement element) {
-		try {
-			action.moveToElement(element).pause(Duration.ofMillis(150)).perform();// to wait on the element 150
-																					// milseconds.
-			dp_wait.until(ExpectedConditions.elementToBeClickable(element));
-			action.moveToElement(element).click().perform();
-		} catch (Exception e) {
-			System.out.println("Click failed for element: " + element + " - " + e.getMessage());
-			throw e;
-		}
-	}
+	@FindBy(xpath = "(//span[contains(@class,'select2-selection--single')])[1]")
+	private WebElement accordionDropdown;
 
 	// filter box for location
-	public boolean openedfilterBoxLocationAndoption() {
+	public boolean selectLocation(String locationName) {
 		try {
-			dp_wait.until(ExpectedConditions.elementToBeClickable(dropdownLocation));
-			dropdownLocation.click();
-			System.out.println("Opened dropdown menu for location filter.");
+			action.sendKeys(Keys.END).perform();
+			dp_wait.until(ExpectedConditions.elementToBeClickable(accordionDropdown));
+			accordionDropdown.click();
+			System.out.println("Dropdown clicked");
+			 
 
-			dp_wait.until(ExpectedConditions.elementToBeClickable(locationOption));
-			System.out.println("Location dropdown opened");
+//			WebElement allOption = dp_driver
+//					.findElement(By.xpath("//span[@id='select2-filter-by-location-container' and text()='All']"));
+//			allOption.click();
+//			dp_wait.until(ExpectedConditions.elementToBeClickable(accordionDropdown));
+//			List<WebElement> accordionOptionsList = dp_driver.findElements(By.xpath("//span[contains(@class,'select2-container--open')]//ul[@class='select2-results__options']/li"));
+//			for (WebElement opt : accordionOptionsList) {
+//				System.out.println("opt " + opt);
+//				if (opt.getText().trim().contains(locationName)) {
+//					opt.click();
+//					System.out.println("Seçilen location: " + opt.getText());
+//					return true;
+//				}
+//			}
 
 			return true;
 		} catch (Exception e) {
@@ -74,5 +74,4 @@ public class DepertmantPage {
 			return false;
 		}
 	}
-
 }
