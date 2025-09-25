@@ -7,5 +7,6 @@ public class TestDataSets {
 	public final static String base_all="useinsider";
 	public final static String careers_url = "careers";
 	public final static String browserName = "chrome";
-
+	public final static String roleNameLink = "quality-assurance";
+	public final static String roleName = "Quality Assurance";
 }

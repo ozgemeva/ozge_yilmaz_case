@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="QA Case Suite" verbose="1">
-	<test name="UI Tests">
+	<test name="E2E Flow">
 		<classes>
-			<class name="tests.CareersPageTest"/>
+			<class name="tests.PositionPageTest"/>
 		</classes>
 	</test>
 </suite>
+

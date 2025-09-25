@@ -42,9 +42,6 @@ public class CareersPage {
 	@FindBy(css = "#career-our-location li.glide__slide.glide__slide--active")
 	private WebElement activeSlideLocator;
 
-	@FindBy(xpath = "//a[h3[normalize-space()='Quality Assurance']]")
-	private WebElement jobRole;
-
 	// Constructor
 	public CareersPage(WebDriver driver) {
 		this.cp_driver = driver;
@@ -166,15 +163,19 @@ public class CareersPage {
 		}
 	}
 
-	public boolean selectRoleForWork() {
+	//Select role method
+	public boolean selectRoleForWork(String roleName) {
 		try {
-			
-			clickBtn(jobRole);
-			System.out.println("Click role button");
-			return true;
+	        By roleLocator = By.xpath("//a[h3[normalize-space()='" + roleName + "']]");
+	        WebElement role = cp_wait.until(ExpectedConditions.elementToBeClickable(roleLocator));	
+	        cp_wait.until(ExpectedConditions.elementToBeClickable(role));
+	        clickBtn(role);
+	        System.out.println("Clicked role: " + roleName);
+	        return true;
 		} catch (Exception e) {
 			System.out.println("Exception : " + e.getMessage());
 			return false;
 		}
 	}
+
 }

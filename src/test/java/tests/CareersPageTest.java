@@ -52,7 +52,7 @@ public class CareersPageTest extends BaseTest {
 
 		int beforeClickAlltems = cp.getTeamsSizeCount();
 		System.out.println("Job items before see all : " + beforeClickAlltems);
-		
+
 		Assert.assertTrue(cp.clickSeeAllTeamsBtn(), "button is not clickable");
 
 		int afterClickAlltems = cp.getTeamsSizeCount();
@@ -64,20 +64,19 @@ public class CareersPageTest extends BaseTest {
 			Assert.assertTrue(afterClickAlltems > beforeClickAlltems, "Job items did not increase");
 		}
 	}
-	
+
 	@Test(dependsOnMethods = "verifyOnCareerPageIsOpened")
 	public void verifyLifeAtInsiderSection() {
-	    Assert.assertTrue(cp.isLifeAtInsiderVisible(), "Life at Insider section is missing!");
-	    
-	    int slides = cp.getLifeAtInsiderSlidesCount();
-	    System.out.println("Life at Insider slides count: " + slides);
-	    Assert.assertTrue(slides > 0, "No slides found in Life at Insider section!");
+		Assert.assertTrue(cp.isLifeAtInsiderVisible(), "Life at Insider section is missing!");
+
+		int slides = cp.getLifeAtInsiderSlidesCount();
+		System.out.println("Life at Insider slides count: " + slides);
+		Assert.assertTrue(slides > 0, "No slides found in Life at Insider section!");
 	}
-	
-	
+
 	@Test(dependsOnMethods = "verifyScrollToCarousel")
 	public void verifyRolePosition() {
-	    Assert.assertTrue(cp.selectRoleForWork(), "Role did not select.");
+		Assert.assertTrue(cp.selectRoleForWork(TestDataSets.roleName), "Role did not select.");
 	}
 
 }
