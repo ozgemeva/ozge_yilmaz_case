@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -52,23 +51,16 @@ public class DepertmantPage {
 			dp_wait.until(ExpectedConditions.elementToBeClickable(accordionDropdown));
 			accordionDropdown.click();
 			System.out.println("Dropdown clicked");
-			 
-
-//			WebElement allOption = dp_driver
-//					.findElement(By.xpath("//span[@id='select2-filter-by-location-container' and text()='All']"));
-//			allOption.click();
-//			dp_wait.until(ExpectedConditions.elementToBeClickable(accordionDropdown));
-//			List<WebElement> accordionOptionsList = dp_driver.findElements(By.xpath("//span[contains(@class,'select2-container--open')]//ul[@class='select2-results__options']/li"));
-//			for (WebElement opt : accordionOptionsList) {
-//				System.out.println("opt " + opt);
-//				if (opt.getText().trim().contains(locationName)) {
-//					opt.click();
-//					System.out.println("Seçilen location: " + opt.getText());
-//					return true;
-//				}
-//			}
-
-			return true;
+			 WebElement locationSelect = dp_driver.findElement( By.xpath("//select[@id='filter-by-location']"));
+			 Select select = new Select(locationSelect);
+			 List<WebElement> allOptions = select.getOptions();
+		        System.out.println("Total options: " + allOptions.size());
+		        for (WebElement opt : allOptions) {
+		            System.out.println("Option text: " + opt.getText());
+		        }
+		        select.selectByVisibleText(locationName);
+		        System.out.println("Selected location: " + locationName);
+		        return true;
 		} catch (Exception e) {
 			System.out.println("Filter selection failed: " + e.getMessage());
 			return false;
