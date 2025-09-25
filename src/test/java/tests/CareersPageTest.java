@@ -27,7 +27,7 @@ public class CareersPageTest extends BaseTest {
 	@Test
 	public void verifyOnCareerPageIsOpened() {
 		navigateToCareers();
-		Assert.assertTrue(cp.isOnCareerPage(TestDataSets.careers_url), "Careers page is not opened correctly!");
+		Assert.assertTrue(cp.isOnCareerPage(TestDataSets.CAREERS_PATH), "Careers page is not opened correctly!");
 	}
 
 	@Test(priority = 1, dependsOnMethods = "verifyOnCareerPageIsOpened")
@@ -76,7 +76,7 @@ public class CareersPageTest extends BaseTest {
 
 	@Test(dependsOnMethods = "verifyScrollToCarousel")
 	public void verifyRolePosition() {
-		Assert.assertTrue(cp.selectRoleForWork(TestDataSets.roleName), "Role did not select.");
+		Assert.assertTrue(cp.selectRoleForWork(TestDataSets.ROLE_NAME), "Role did not select.");
 	}
 
 }

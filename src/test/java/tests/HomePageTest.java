@@ -19,21 +19,23 @@ public class HomePageTest extends BaseTest {
 
 	@Test(priority = 1)
 	public void verifyHomePageIsOpened() {
+		 System.out.println("Checking home page at URL: " + TestDataSets.BASE_URL);
 
-		System.out.println("The url of the home page is : " + TestDataSets.base_url);
+		    // Accept cookies if popup exists
+		    hp.acceptCookiesIfPresent();
 
-		hp.acceptCookiesIfPresent();
-		// check for insider that include inseder title
-		Assert.assertTrue(hp.isHomePageOpened(TestDataSets.baseUrlInclude), "Home page is not opened correctly!");
+		    // Check title contains "Insider"
+		    boolean isOpened = hp.isHomePageOpened("Insider");
+		    Assert.assertTrue(isOpened, "Home page is not opened correctly!");
 	}
 
-	@Test(priority = 2, dependsOnMethods = "verifyHomePageIsOpened")
+	@Test(dependsOnMethods = "verifyHomePageIsOpened")
 	public void clickCompanyLinkTest() {
 		hp.clickCompanyLink();
 		Assert.assertTrue(hp.isdisablefordropdownMenu(), "Company menu is not visible!");
 	}
 
-	@Test(priority = 3, dependsOnMethods = "clickCompanyLinkTest")
+	@Test(dependsOnMethods = "clickCompanyLinkTest")
 	public void clickCareerLinkTest() {
 		hp.clickCareerLink();
 		WebElement subdropdownMenu = driver.findElement(By.xpath("//a[normalize-space()='Careers']"));

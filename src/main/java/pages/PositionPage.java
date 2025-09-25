@@ -26,11 +26,17 @@ public class PositionPage {
 	}
 
 	public boolean isOnTheRolePage(String rolePageTitle) {
-		pp_wait.until(ExpectedConditions.urlContains(rolePageTitle));
-		System.out.println(" --> Title: " + rolePageTitle);
-		boolean currentUrl = pp_driver.getCurrentUrl().toLowerCase().contains(rolePageTitle);
-		return currentUrl;
+		String expectedUrl =rolePageTitle.toLowerCase();
+		 pp_wait.until(ExpectedConditions.urlContains(expectedUrl));
+		 
+		 // get current url
+	        String current = pp_driver.getCurrentUrl().toLowerCase();
+	        boolean isCorrectUrl = current.contains(expectedUrl);
+	        
+		System.out.println(" --> currentUrl: " +pp_driver.getCurrentUrl().toLowerCase());
+		return isCorrectUrl;
 	}
+	
 
 	public void clickButtonRole(WebElement element) {
 		try {

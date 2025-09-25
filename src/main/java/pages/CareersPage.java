@@ -52,10 +52,17 @@ public class CareersPage {
 
 	// --- Page validation ---
 	public boolean isOnCareerPage(String careersPageTitle) {
-		cp_wait.until(ExpectedConditions.urlContains(careersPageTitle));
-		System.out.println(" --> Title: " + careersPageTitle);
-		boolean currentUrl = cp_driver.getCurrentUrl().toLowerCase().contains(careersPageTitle);
-		return currentUrl;
+		try {
+			String expectedUrl = careersPageTitle.toLowerCase();
+			cp_wait.until(ExpectedConditions.urlContains(expectedUrl));
+			String current = cp_driver.getCurrentUrl().toLowerCase();
+			boolean isCorrectUrl = current.contains(expectedUrl);
+			System.out.println(" --> Current URL: " + current);
+			return isCorrectUrl;
+		} catch (Exception e) {
+			System.out.println("Career page check failed: " + e.getMessage());
+			return false;
+		}
 	}
 
 	// General to scroll until element
@@ -74,7 +81,7 @@ public class CareersPage {
 	// General click btn method
 	public void clickBtn(WebElement element) {
 		try {
-			action.moveToElement(element).perform();
+			action.moveToElement(element).pause(Duration.ofMillis(150)).perform();// to wait on the element  150 seconds.
 			cp_wait.until(ExpectedConditions.elementToBeClickable(element));
 			action.moveToElement(element).click().perform();
 		} catch (Exception e) {
@@ -163,15 +170,16 @@ public class CareersPage {
 		}
 	}
 
-	//Select role method
+	// Select role method
 	public boolean selectRoleForWork(String roleName) {
 		try {
-	        By roleLocator = By.xpath("//a[h3[normalize-space()='" + roleName + "']]");
-	        WebElement role = cp_wait.until(ExpectedConditions.elementToBeClickable(roleLocator));	
-	        cp_wait.until(ExpectedConditions.elementToBeClickable(role));
-	        clickBtn(role);
-	        System.out.println("Clicked role: " + roleName);
-	        return true;
+		
+			By roleLocator = By.xpath("//a[.//h3[normalize-space()='" + roleName + "']]");
+			WebElement role = cp_wait.until(ExpectedConditions.elementToBeClickable(roleLocator));
+			cp_wait.until(ExpectedConditions.elementToBeClickable(role));
+			clickBtn(role);
+			System.out.println("Clicked role: " + roleName);
+			return true;
 		} catch (Exception e) {
 			System.out.println("Exception : " + e.getMessage());
 			return false;

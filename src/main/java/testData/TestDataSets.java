@@ -2,11 +2,15 @@ package testData;
 
 public class TestDataSets {
 
-	public final static String base_url = "https://useinsider.com/";
-	public final static String baseUrlInclude ="insider";
-	public final static String base_all="useinsider";
-	public final static String careers_url = "careers";
-	public final static String browserName = "chrome";
-	public final static String roleNameLink = "quality-assurance";
-	public final static String roleName = "Quality Assurance";
+    public static final String BASE_URL = "https://useinsider.com";
+    public static final String BASE_DOMAIN = "useinsider";
+    public static final String CAREERS_PATH = "/careers";
+    public static final String BROWSER_NAME = "chrome";
+
+    // Role data
+    public static final String ROLE_NAME_LINK = "quality-assurance";
+    public static final String ROLE_NAME = "Quality Assurance";
+
+    // Department page template
+    public static final String DEPARTMENT_URL_TEMPLATE = BASE_URL + CAREERS_PATH + "/open-positions/?department=%s";
 }

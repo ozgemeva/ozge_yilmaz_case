@@ -12,65 +12,68 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import testData.TestDataSets;
 
-
-
 public class HomePage {
 	private WebDriver hp_driver;
 	WebDriverWait hp_wait;
-	
+
 	@FindBy(xpath = "//a[normalize-space()='Accept All']")
 	WebElement acceptCookiesBtn;
-	
 
-	@FindBy(xpath ="//a[normalize-space()='Company']")
+	@FindBy(xpath = "//a[normalize-space()='Company']")
 	WebElement dropdownBtnCompany;
-	
+
 	@FindBy(xpath = "//a[normalize-space()='Careers']")
 	WebElement subDropdownBtnCareer;
-	
 
 	// Constructor
 	public HomePage(WebDriver driver) {
 		this.hp_driver = driver;
 		PageFactory.initElements(driver, this);
 		hp_wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-	
+
 	}
 
 	// home page check
 	public boolean isHomePageOpened(String titleInclude) {
-		hp_wait.until(ExpectedConditions.urlContains(TestDataSets.base_all));
-		boolean title = hp_driver.getTitle().toLowerCase().contains(titleInclude);
-		return title;
+		try {
+			hp_wait.until(ExpectedConditions.urlContains(TestDataSets.BASE_DOMAIN));
+			String currentTitle = hp_driver.getTitle().toLowerCase();
+			boolean isTitleCorrect = currentTitle.contains(titleInclude.toLowerCase());
+			System.out.println(" --> Current page title: " + currentTitle);
+			return isTitleCorrect;
+		} catch (Exception e) {
+			System.out.println("Home page check failed: " + e.getMessage());
+			return false;
+		}
 	}
 
-	// If the cookie banner appears, it will be accepted; if not, the test will continue
+	// If the cookie banner appears, it will be accepted; if not, the test will
+	// continue
 	public void acceptCookiesIfPresent() {
+		try {
 
-		   try {
-			   
-		        WebDriverWait shortWait = new WebDriverWait(hp_driver, Duration.ofSeconds(3));
-		        shortWait.until(ExpectedConditions.visibilityOf(acceptCookiesBtn));
-		        acceptCookiesBtn.click();
-		        System.out.println("Cookie banner accepted.");
-		        
-		    } catch (Exception e) {
-		        System.out.println("No cookie banner displayed, continue without accepting.");
-		    }
+			WebDriverWait shortWait = new WebDriverWait(hp_driver, Duration.ofSeconds(3));
+			shortWait.until(ExpectedConditions.visibilityOf(acceptCookiesBtn));
+			acceptCookiesBtn.click();
+			System.out.println("Cookie banner accepted.");
+
+		} catch (Exception e) {
+			System.out.println("No cookie banner displayed, continue without accepting.");
+		}
 	}
 
 	public void clickCompanyLink() {
 		hp_wait.until(ExpectedConditions.elementToBeClickable(dropdownBtnCompany));
 		dropdownBtnCompany.click();
 	}
-	
+
 	public void clickCareerLink() {
 		hp_wait.until(ExpectedConditions.elementToBeClickable(subDropdownBtnCareer));
 		subDropdownBtnCareer.click();
 	}
-	
+
 	public boolean isdisablefordropdownMenu() {
 		return dropdownBtnCompany.isDisplayed();
 	}
-	
+
 }

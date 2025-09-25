@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="QA Case Suite" verbose="1">
-	<test name="E2E Flow">
+	<test name="UI Flow">
 		<classes>
 			<class name="tests.PositionPageTest"/>
 		</classes>
 	</test>
 </suite>
 
+<!-- **class name**  -->
+
+<!-- tests.HomePageTest  -->
+<!-- tests.CareersPageTest  -->
+<!-- tests.PositionPageTest  -->
+<!-- tests.DepertmentPageTest  -->

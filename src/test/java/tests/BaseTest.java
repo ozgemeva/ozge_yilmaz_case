@@ -11,8 +11,8 @@ public abstract class BaseTest {
 
 	@BeforeSuite
 	public void setUpSuite() {
-		driver = DriverManager.getDriver(TestDataSets.browserName);
-		driver.get(TestDataSets.base_url);
+		driver = DriverManager.getDriver(TestDataSets.BROWSER_NAME);
+		driver.get(TestDataSets.BASE_URL);
 	}
 
 	@AfterSuite
