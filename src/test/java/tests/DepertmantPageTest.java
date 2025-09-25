@@ -39,7 +39,11 @@ public class DepertmantPageTest extends BaseTest {
 		String formattedDepertmantName= String.format(roleNameLink.replaceAll(" ", "")).toLowerCase();
 	
 		System.out.println("Depertmant name is formated for rolepage "+formattedDepertmantName);
-		Assert.assertTrue(dp.isOnDepartmentPage(formattedDepertmantName),"is not on this rolepage ->");
+		Assert.assertTrue(dp.isOnDepartmentPage(formattedDepertmantName),"is not on this rolepage-->");
+	}
+	@Test(dependsOnMethods = "verifyIsOnDepertmantPage")
+	public void verifyLocationFilterMenu() {
+		Assert.assertTrue(dp.openedfilterBoxLocationAndoption(), "Location box did not open");
 	}
 
 }
